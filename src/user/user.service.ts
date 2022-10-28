@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+
 const dummyUsers: User[] = [
   { id: 1, name: '유저1' },
   { id: 2, name: '유저2' },
@@ -16,8 +18,8 @@ export class UserService {
    * @param name 유저 이름
    * @returns {User[]} users
    */
-  onCreateUser(id: number, name: string): User[] {
-    return dummyUsers.concat({ id, name })
+  onCreateUser(createUserDto: CreateUserDto): User[] {
+    return dummyUsers.concat(createUserDto)
   }
 
   /**
@@ -48,9 +50,9 @@ export class UserService {
    * @param name 유저 이름
    * @returns {User} user
    */
-  setUser(id: number, name: string): User {
+  setUser(id: number, updateUserDto: UpdateUserDto): User {
     return dummyUsers.find((u: User) => {
-      if(u.id == id) return u.name = name
+      if(u.id == id) return u.name = updateUserDto.name
     })
   }
 
@@ -60,10 +62,10 @@ export class UserService {
    *
    * @returns {User[]} users
    */
-  setAllUser(id, name): User[] {
+  setAllUser(updateUserDto: UpdateUserDto): User[] {
     return dummyUsers.map((u: User) => {
-      if (u.id == id) {
-        u.name = name;
+      if (u.id == updateUserDto.id) {
+        u.name = updateUserDto.name;
       }
 
       return {

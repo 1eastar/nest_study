@@ -8,9 +8,13 @@ import {
   Body,
   Param,
   Query,
-  ConsoleLogger,
+  UsePipes,
+  ValidationPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
+
 import { UserService } from './user.service'
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto'
 
 @Controller('user')
 export class UserController {
@@ -22,9 +26,14 @@ export class UserController {
   }
 
   @Post('/create_user')
-  onCreateUser(@Body('id') id: number, @Body('name') name: string ): User[] {
-    return this.UserService.onCreateUser(id, name)
+  @UsePipes(ValidationPipe)
+  onCreateUser(@Body() createUserDto: CreateUserDto): User[] {
+    return this.UserService.onCreateUser(createUserDto)
   }
+  // onCreateUser(@Body('id') id: number, @Body('name') name: string): User[] {
+  //   return this.UserService.onCreateUser(id, name)
+  // }
+  
 
   @Get('/user_all')
   getAllUser(): User[] {
@@ -42,9 +51,15 @@ export class UserController {
   }
 
   @Patch('/patchuser/:id')
-  SetUser(@Param('id') id: number, @Body('name') name: string): User {
-    return this.UserService.setUser(id, name)
+  @UsePipes(ValidationPipe)
+  setUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): User {
+    console.log(id, updateUserDto)
+    return this.UserService.setUser(id, updateUserDto)
   }
+  // SetUser(@Param('id') id: number, @Body('name') name: string): User {
+  //   return this.UserService.setUser(id, name)
+  // }
+
 
   /**
    * @author Vive
@@ -54,9 +69,14 @@ export class UserController {
    * @param name 유저 이름
    */
   @Put('/update')
-  setAllUser(@Body('id') id: number, @Body('name') name: string): User[] {
-    return this.UserService.setAllUser(id, name);
+  @UsePipes(ValidationPipe)
+  setAllUser(@Body() updateUserDto: UpdateUserDto): User[] {
+    return this.UserService.setAllUser(updateUserDto);
   }
+  // setAllUser(@Body('id') id: number, @Body('name') name: string): User[] {
+  //   return this.UserService.setAllUser(id, name);
+  // }
+
 
   /**
    * @author Ryan
