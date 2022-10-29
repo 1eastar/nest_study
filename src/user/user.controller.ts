@@ -25,12 +25,7 @@ import {
 export class UserController {
   constructor(private readonly UserService: UserService) {}
 
-  @Get()
-  getHelloWorld(): string {
-    return this.UserService.getHelloWorld();
-  }
-
-  @Post('/create_user')
+  @Post()
   @UsePipes(ValidationPipe)
   onCreateUser(@Body() createUserDto: CreateUserDto): User[] {
     return this.UserService.onCreateUser(createUserDto)
@@ -45,20 +40,21 @@ export class UserController {
     return this.UserService.getAllUser()
   }
 
-  @Get('/finduser')
+  @Get()
+  @UsePipes(ValidationPipe)
   findUserById_QueryParam(@Query() findUserDto: FindUserDto): User {
     return this.UserService.findUserById(findUserDto)
   }
 
-  @Get('/finduser/:id')
+  @Get('/:id')
+  @UsePipes(ValidationPipe)
   findUserById_URLParam(@Param() findUSerDto: FindUserDto): User {
     return this.UserService.findUserById(findUSerDto)
   }
 
-  @Patch('/patchuser/:id')
+  @Patch('/:id')
   @UsePipes(ValidationPipe)
   setUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): User {
-    console.log(id, updateUserDto)
     return this.UserService.setUser(id, updateUserDto)
   }
   // SetUser(@Param('id') id: number, @Body('name') name: string): User {
@@ -73,7 +69,7 @@ export class UserController {
    * @param id 유저 고유 아이디
    * @param name 유저 이름
    */
-  @Put('/update')
+  @Put()
   @UsePipes(ValidationPipe)
   setAllUser(@Body() updateUserDto: UpdateUserDto): User[] {
     return this.UserService.setAllUser(updateUserDto);
@@ -89,7 +85,8 @@ export class UserController {
    *
    * @param DeleteUserDto 유저 고유 아이디
    */
-  @Delete('/delete')
+  @Delete()
+  @UsePipes(ValidationPipe)
   deleteUser(@Query() deleteUserDto: DeleteUserDto): User[] {
     return this.UserService.deleteUser(deleteUserDto);
   }

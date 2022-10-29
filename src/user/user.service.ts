@@ -8,9 +8,9 @@ import {
 } from './dto/user.dto';
 
 const dummyUsers: User[] = [
-  { id: 1, name: '유저1' },
-  { id: 2, name: '유저2' },
-  { id: 3, name: '유저3' },
+  { id: 1, name: 'Vive' },
+  { id: 2, name: 'Vive2' },
+  { id: 3, name: 'Vive3' },
 ]
 
 @Injectable()
