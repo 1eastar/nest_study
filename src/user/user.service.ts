@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  FindUserDto,
+  DeleteUserDto,
+} from './dto/user.dto';
 
 const dummyUsers: User[] = [
   { id: 1, name: '유저1' },
@@ -36,10 +41,10 @@ export class UserService {
    * @author Vive
    * @description 유저 아이디로 단일 유저 조회
    * 
-   * @param id 유저 고유 아이디
+   * @param FindUserDto id 유저 고유 아이디
    */
-  findUserById(id: number): User {
-    return dummyUsers.find((u: User) => u.id == id)
+  findUserById(findUserDto: FindUserDto): User {
+    return dummyUsers.find((u: User) => u.id == findUserDto.id)
   }
 
   /**
@@ -79,11 +84,11 @@ export class UserService {
    * @author Vive
    * @description 유저 삭제
    *
-   * @param id 유저 고유 아이디
+   * @param DeleteUserDto 유저 고유 아이디
    * @returns {User[]} users
    */
-  deleteUser(id: number): User[] {
-    return dummyUsers.filter((u: User) => u.id != id);
+  deleteUser(deleteUserDto: DeleteUserDto): User[] {
+    return dummyUsers.filter((u: User) => u.id != deleteUserDto.id);
   }
 
   getHelloWorld(): string {

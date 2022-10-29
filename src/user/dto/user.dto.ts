@@ -14,3 +14,11 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
+
+export class FindUserDto {
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
+}
+
+export class DeleteUserDto extends PartialType(FindUserDto) {}

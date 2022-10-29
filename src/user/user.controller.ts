@@ -14,7 +14,12 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from './user.service'
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto'
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  FindUserDto,
+  DeleteUserDto,
+} from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -33,7 +38,7 @@ export class UserController {
   // onCreateUser(@Body('id') id: number, @Body('name') name: string): User[] {
   //   return this.UserService.onCreateUser(id, name)
   // }
-  
+
 
   @Get('/user_all')
   getAllUser(): User[] {
@@ -41,13 +46,13 @@ export class UserController {
   }
 
   @Get('/finduser')
-  findUserById_QueryParam(@Query('id') id: number): User {
-    return this.UserService.findUserById(id)
+  findUserById_QueryParam(@Query() findUserDto: FindUserDto): User {
+    return this.UserService.findUserById(findUserDto)
   }
 
   @Get('/finduser/:id')
-  findUserById_URLParam(@Param('id') id: number): User {
-    return this.UserService.findUserById(id)
+  findUserById_URLParam(@Param() findUSerDto: FindUserDto): User {
+    return this.UserService.findUserById(findUSerDto)
   }
 
   @Patch('/patchuser/:id')
@@ -79,13 +84,13 @@ export class UserController {
 
 
   /**
-   * @author Ryan
+   * @author Vive
    * @description Query 방식 - 단일 유저 삭제
    *
-   * @param id 유저 고유 아이디
+   * @param DeleteUserDto 유저 고유 아이디
    */
   @Delete('/delete')
-  deleteUser(@Query('id') id: number): User[] {
-    return this.UserService.deleteUser(id);
+  deleteUser(@Query() deleteUserDto: DeleteUserDto): User[] {
+    return this.UserService.deleteUser(deleteUserDto);
   }
 }
